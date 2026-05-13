@@ -1,0 +1,185 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-[#0a0a0f] text-white font-sans overflow-x-hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0a0a0f;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #7C3AED;
+    border-radius: 3px;
+  }
+}
+
+@layer components {
+  /* Glass card */
+  .glass {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl;
+  }
+
+  .glass-dark {
+    background: rgba(15, 15, 30, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    border-radius: 16px;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-violet-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent;
+  }
+
+  /* Neon button */
+  .btn-primary {
+    @apply relative px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300;
+    background: linear-gradient(135deg, #7C3AED, #4F46E5);
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 0 35px rgba(124, 58, 237, 0.7);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    @apply relative px-6 py-3 rounded-xl font-semibold text-sm border border-violet-500/50 text-violet-400 transition-all duration-300;
+  }
+
+  .btn-outline:hover {
+    @apply border-violet-400 text-white;
+    background: rgba(124, 58, 237, 0.15);
+    box-shadow: 0 0 25px rgba(124, 58, 237, 0.3);
+  }
+
+  /* Section headings */
+  .section-title {
+    @apply text-4xl md:text-5xl font-bold text-center mb-4;
+  }
+
+  .section-subtitle {
+    @apply text-gray-400 text-center text-lg mb-16 max-w-2xl mx-auto;
+  }
+
+  /* Blob glow effects */
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    animation: float 8s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  /* Neon border glow */
+  .neon-border {
+    border: 1px solid transparent;
+    background-clip: padding-box;
+    position: relative;
+  }
+
+  .neon-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, #7C3AED, #4F46E5, #7C3AED);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .neon-border:hover::before {
+    opacity: 1;
+  }
+
+  /* Skill bar */
+  .skill-bar {
+    @apply h-2 rounded-full bg-gray-800 overflow-hidden;
+  }
+
+  .skill-fill {
+    @apply h-full rounded-full;
+    background: linear-gradient(90deg, #7C3AED, #A78BFA);
+    box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+  }
+
+  /* Timeline */
+  .timeline-line {
+    @apply absolute left-1/2 top-0 bottom-0 w-0.5;
+    background: linear-gradient(to bottom, transparent, #7C3AED, #4F46E5, transparent);
+    transform: translateX(-50%);
+  }
+
+  /* Input fields */
+  .form-input {
+    @apply w-full px-4 py-3 rounded-xl text-white text-sm outline-none transition-all duration-300;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(124, 58, 237, 0.2);
+  }
+
+  .form-input:focus {
+    border-color: rgba(124, 58, 237, 0.7);
+    box-shadow: 0 0 15px rgba(124, 58, 237, 0.2);
+  }
+
+  .form-input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-30px) rotate(5deg); }
+  66% { transform: translateY(-15px) rotate(-3deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(124, 58, 237, 0.3); }
+  50% { box-shadow: 0 0 30px rgba(124, 58, 237, 0.8); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Cursor glow */
+.cursor-glow {
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle, rgba(124,58,237,0.8), transparent 70%);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s;
+}
+
+/* Active nav underline */
+.nav-link-active {
+  color: #A78BFA;
+}
+
+.nav-link-active::after {
+  width: 100%;
+}
