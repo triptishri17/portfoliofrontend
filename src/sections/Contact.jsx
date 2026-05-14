@@ -1,65 +1,221 @@
 import { useState } from 'react';
+
 import { motion } from 'framer-motion';
-import { Send, Github, Linkedin, Instagram, Twitter, Mail, CheckCircle, AlertCircle, Loader } from 'lucide-react';
-import { fadeInUp, fadeInLeft, fadeInRight, viewportOptions } from '../animations/variants';
+
+import {
+  Send,
+  Github,
+  Linkedin,
+  Instagram,
+  Mail,
+  CheckCircle,
+  AlertCircle,
+  Loader,
+} from 'lucide-react';
+
+import {
+  fadeInUp,
+  fadeInLeft,
+  fadeInRight,
+  viewportOptions,
+} from '../animations/variants';
+
 import { sendContactMessage } from '../hooks/useApi';
 
+/* =========================
+    Social Links
+========================== */
+
 const socials = [
-  { icon: Github, href: 'https://github.com/tripti', label: 'GitHub', color: 'hover:text-gray-300' },
-  { icon: Linkedin, href: 'https://linkedin.com/in/tripti', label: 'LinkedIn', color: 'hover:text-blue-400' },
-  { icon: Instagram, href: 'https://instagram.com/tripti', label: 'Instagram', color: 'hover:text-pink-400' },
-  { icon: Twitter, href: 'https://x.com/tripti', label: 'X/Twitter', color: 'hover:text-sky-400' },
-  { icon: Mail, href: 'mailto:tripti@example.com', label: 'Email', color: 'hover:text-violet-400' },
+  {
+    icon: Github,
+    href: 'https://github.com/triptishri17',
+    label: 'GitHub',
+  },
+
+  {
+    icon: Linkedin,
+    href: 'https://www.linkedin.com/in/tripti-shrivastav-478b5b257',
+    label: 'LinkedIn',
+  },
+
+  {
+    icon: Instagram,
+    href: 'https://instagram.com/tripti_shri_',
+    label: 'Instagram',
+  },
+
+  {
+    icon: Mail,
+    href: 'shrivastavtripti5472@gmail.com',
+    label: 'Email',
+  },
 ];
 
 const Contact = () => {
-  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
-  const [status, setStatus] = useState('idle'); // idle | loading | success | error
-  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleChange = (e) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+  /* =========================
+      States
+  ========================== */
+
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  });
+
+  const [status, setStatus] = useState('idle');
+
+  const [errorMsg, setErrorMsg] =
+    useState('');
+
+  /* =========================
+      Handle Change
+  ========================== */
+
+  const handleChange = (e) => {
+
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  /* =========================
+      Submit
+  ========================== */
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
-    if (!form.name || !form.email || !form.message) return;
+
+    if (
+      !form.name ||
+      !form.email ||
+      !form.message
+    ) {
+      return;
+    }
 
     setStatus('loading');
     setErrorMsg('');
 
     try {
+
       await sendContactMessage(form);
+
       setStatus('success');
-      setForm({ name: '', email: '', subject: '', message: '' });
-      setTimeout(() => setStatus('idle'), 5000);
+
+      setForm({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+      });
+
+      setTimeout(() => {
+        setStatus('idle');
+      }, 5000);
+
     } catch (err) {
+
       setStatus('error');
+
       setErrorMsg(
-        err.response?.data?.message || 'Something went wrong. Please try again.'
+        err.response?.data?.message ||
+        'Something went wrong. Please try again.'
       );
-      setTimeout(() => setStatus('idle'), 5000);
+
+      setTimeout(() => {
+        setStatus('idle');
+      }, 5000);
     }
   };
 
   return (
-    <section id="contact" className="py-24 relative">
-      <div className="blob w-72 h-72 bg-violet-700 top-10 left-10" />
-      <div className="blob w-64 h-64 bg-indigo-600 bottom-10 right-10" style={{ animationDelay: '2s' }} />
+
+    <section
+      id="contact"
+      className="
+        relative
+        py-28
+        overflow-hidden
+      "
+    >
+
+      {/* =========================
+          Background Effects
+      ========================== */}
+
+      <div className="blob w-80 h-80 bg-violet-500 top-0 left-0" />
+
+      <div
+        className="blob w-72 h-72 bg-indigo-500 bottom-0 right-0"
+        style={{
+          animationDelay: '2s',
+        }}
+      />
+
+      {/* =========================
+          Container
+      ========================== */}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div initial="hidden" whileInView="visible" viewport={viewportOptions} variants={fadeInUp}>
-          <p className="text-violet-400 font-semibold text-sm tracking-widest uppercase text-center mb-3">
-            Get in Touch
+
+        {/* =========================
+            Heading
+        ========================== */}
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOptions}
+          variants={fadeInUp}
+          className="text-center mb-16"
+        >
+
+          <p
+            className="
+              text-violet-500
+              dark:text-violet-400
+
+              font-semibold
+              tracking-[0.2em]
+              uppercase
+              text-sm
+              mb-4
+            "
+          >
+            Contact Me
           </p>
+
           <h2 className="section-title">
-            Let's <span className="gradient-text">Connect</span>
+            Let's
+            {' '}
+            <span className="gradient-text">
+              Work Together
+            </span>
           </h2>
+
           <p className="section-subtitle">
-            Have a project in mind or want to collaborate? I'd love to hear from you!
+            Have a project idea, freelance work,
+            or collaboration opportunity?
+
+            I’d love to hear from you.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Left — Info */}
+        {/* =========================
+            Layout
+        ========================== */}
+
+        <div className="grid lg:grid-cols-2 gap-10">
+
+          {/* =========================
+              LEFT SIDE
+          ========================== */}
+
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -67,155 +223,557 @@ const Contact = () => {
             variants={fadeInLeft}
             className="space-y-6"
           >
-            <div className="glass-dark p-6 rounded-2xl">
-              <h3 className="text-white font-bold text-xl mb-2">Let's build something great together!</h3>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                I'm currently open to full-time roles and exciting freelance projects. Whether you have a 
-                complex web app in mind or need a landing page — let's talk!
+
+            {/* Intro Card */}
+
+            <div
+              className="
+                rounded-3xl
+                p-8
+
+                border
+                border-black/10
+                dark:border-white/10
+
+                bg-white/70
+                dark:bg-white/5
+
+                backdrop-blur-xl
+              "
+            >
+
+              <div className="mb-6">
+
+                <div
+                  className="
+                    w-20
+                    h-20
+                    rounded-3xl
+
+                    bg-gradient-to-br
+                    from-violet-500
+                    to-indigo-500
+
+                    flex
+                    items-center
+                    justify-center
+
+                    text-3xl
+                    shadow-lg
+                    shadow-violet-500/20
+                  "
+                >
+                  👩‍💻
+                </div>
+              </div>
+
+              <h3
+                className="
+                  text-2xl
+                  font-bold
+                  mb-4
+
+                  text-black
+                  dark:text-white
+                "
+              >
+                Hi, I'm Tripti 👋
+              </h3>
+
+              <p
+                className="
+                  text-gray-600
+                  dark:text-gray-400
+                  leading-relaxed
+                  text-sm
+                "
+              >
+                I'm a passionate MERN Stack Developer
+                focused on building modern,
+                scalable, and user-friendly web
+                applications.
+
+                Currently open for internships,
+                freelance projects, and exciting
+                collaborations.
               </p>
             </div>
 
-            <div className="glass-dark p-6 rounded-2xl space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-violet-500/20 border border-violet-500/30 flex items-center justify-center">
-                  <Mail size={18} className="text-violet-400" />
+            {/* Contact Info */}
+
+            <div
+              className="
+                rounded-3xl
+                p-6
+
+                border
+                border-black/10
+                dark:border-white/10
+
+                bg-white/70
+                dark:bg-white/5
+
+                backdrop-blur-xl
+
+                space-y-5
+              "
+            >
+
+              {/* Email */}
+
+              <div className="flex items-center gap-4">
+
+                <div
+                  className="
+                    w-12
+                    h-12
+                    rounded-2xl
+
+                    bg-violet-500/10
+
+                    border
+                    border-violet-500/20
+
+                    flex
+                    items-center
+                    justify-center
+                  "
+                >
+
+                  <Mail
+                    size={18}
+                    className="text-violet-500"
+                  />
                 </div>
+
                 <div>
-                  <p className="text-gray-500 text-xs">Email</p>
-                  <a href="mailto:tripti@example.com" className="text-white text-sm hover:text-violet-400 transition-colors">
-                    tripti@example.com
+
+                  <p
+                    className="
+                      text-xs
+                      text-gray-500
+                      mb-1
+                    "
+                  >
+                    Email Address
+                  </p>
+
+                  <a
+                    href="mailto:shrivastavtripti5472@gmail.com"
+                    className="
+                      text-sm
+                      font-medium
+
+                      text-black
+                      dark:text-white
+
+                      hover:text-violet-500
+                      transition-colors
+                    "
+                  >
+                    shrivastavtripti5472@gmail.com
                   </a>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-green-500/20 border border-green-500/30 flex items-center justify-center">
+
+              {/* Status */}
+
+              <div className="flex items-center gap-4">
+
+                <div
+                  className="
+                    w-12
+                    h-12
+                    rounded-2xl
+
+                    bg-green-500/10
+
+                    border
+                    border-green-500/20
+
+                    flex
+                    items-center
+                    justify-center
+                  "
+                >
+
                   <span className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
                 </div>
+
                 <div>
-                  <p className="text-gray-500 text-xs">Status</p>
-                  <p className="text-green-400 text-sm font-medium">Available for work</p>
+
+                  <p
+                    className="
+                      text-xs
+                      text-gray-500
+                      mb-1
+                    "
+                  >
+                    Availability
+                  </p>
+
+                  <p
+                    className="
+                      text-sm
+                      font-medium
+                      text-green-500
+                    "
+                  >
+                    Available for work
+                  </p>
                 </div>
               </div>
             </div>
 
-            <div className="glass-dark p-6 rounded-2xl">
-              <p className="text-gray-400 text-sm mb-4">Find me on</p>
-              <div className="flex gap-3">
-                {socials.map(({ icon: Icon, href, label, color }) => (
-                  <motion.a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={label}
-                    className={`p-3 rounded-xl border border-white/10 text-gray-500 ${color} hover:border-violet-500/30 transition-all`}
-                    whileHover={{ scale: 1.1, y: -2 }}
-                  >
-                    <Icon size={18} />
-                  </motion.a>
-                ))}
+            {/* Socials */}
+
+            <div
+              className="
+                rounded-3xl
+                p-6
+
+                border
+                border-black/10
+                dark:border-white/10
+
+                bg-white/70
+                dark:bg-white/5
+
+                backdrop-blur-xl
+              "
+            >
+
+              <p
+                className="
+                  text-sm
+                  mb-5
+
+                  text-gray-600
+                  dark:text-gray-400
+                "
+              >
+                Connect with me
+              </p>
+
+              <div className="flex gap-4 flex-wrap">
+
+                {socials.map(
+                  ({
+                    icon: Icon,
+                    href,
+                    label,
+                  }) => (
+
+                    <motion.a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={label}
+                      whileHover={{
+                        scale: 1.08,
+                        y: -3,
+                      }}
+                      className="
+                        w-12
+                        h-12
+                        rounded-2xl
+
+                        border
+                        border-black/10
+                        dark:border-white/10
+
+                        bg-white/60
+                        dark:bg-white/5
+
+                        text-gray-600
+                        dark:text-gray-400
+
+                        hover:text-violet-500
+                        hover:border-violet-500/30
+
+                        transition-all
+                        duration-300
+
+                        flex
+                        items-center
+                        justify-center
+                      "
+                    >
+                      <Icon size={18} />
+                    </motion.a>
+                  )
+                )}
               </div>
             </div>
           </motion.div>
 
-          {/* Right — Form */}
+          {/* =========================
+              RIGHT SIDE FORM
+          ========================== */}
+
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={viewportOptions}
             variants={fadeInRight}
           >
-            <form onSubmit={handleSubmit} className="glass-dark p-8 rounded-2xl space-y-5" noValidate>
+
+            <form
+              onSubmit={handleSubmit}
+              noValidate
+              className="
+                rounded-3xl
+                p-8
+
+                border
+                border-black/10
+                dark:border-white/10
+
+                bg-white/70
+                dark:bg-white/5
+
+                backdrop-blur-xl
+
+                space-y-5
+              "
+            >
+
               <div className="grid sm:grid-cols-2 gap-4">
+
                 <div>
-                  <label className="block text-gray-400 text-xs mb-2 font-medium">Your Name *</label>
+
+                  <label
+                    className="
+                      block
+                      text-xs
+                      font-medium
+                      mb-2
+
+                      text-gray-600
+                      dark:text-gray-400
+                    "
+                  >
+                    Your Name
+                  </label>
+
                   <input
                     type="text"
                     name="name"
                     value={form.name}
                     onChange={handleChange}
-                    placeholder="Arjun Mehta"
+                    placeholder="Your name"
                     className="form-input"
                     required
                   />
                 </div>
+
                 <div>
-                  <label className="block text-gray-400 text-xs mb-2 font-medium">Email Address *</label>
+
+                  <label
+                    className="
+                      block
+                      text-xs
+                      font-medium
+                      mb-2
+
+                      text-gray-600
+                      dark:text-gray-400
+                    "
+                  >
+                    Email Address
+                  </label>
+
                   <input
                     type="email"
                     name="email"
                     value={form.email}
                     onChange={handleChange}
-                    placeholder="arjun@example.com"
+                    placeholder="you@example.com"
                     className="form-input"
                     required
                   />
                 </div>
               </div>
 
+              {/* Subject */}
+
               <div>
-                <label className="block text-gray-400 text-xs mb-2 font-medium">Subject</label>
+
+                <label
+                  className="
+                    block
+                    text-xs
+                    font-medium
+                    mb-2
+
+                    text-gray-600
+                    dark:text-gray-400
+                  "
+                >
+                  Subject
+                </label>
+
                 <input
                   type="text"
                   name="subject"
                   value={form.subject}
                   onChange={handleChange}
-                  placeholder="Project Inquiry"
+                  placeholder="Project discussion"
                   className="form-input"
                 />
               </div>
 
+              {/* Message */}
+
               <div>
-                <label className="block text-gray-400 text-xs mb-2 font-medium">Message *</label>
+
+                <label
+                  className="
+                    block
+                    text-xs
+                    font-medium
+                    mb-2
+
+                    text-gray-600
+                    dark:text-gray-400
+                  "
+                >
+                  Message
+                </label>
+
                 <textarea
+                  rows={6}
                   name="message"
                   value={form.message}
                   onChange={handleChange}
-                  rows={5}
-                  placeholder="Hi Tripti, I'd love to discuss a project with you..."
+                  placeholder="Tell me about your project..."
                   className="form-input resize-none"
                   required
                 />
               </div>
 
-              {/* Status messages */}
+              {/* Success */}
+
               {status === 'success' && (
+
                 <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center gap-2 text-green-400 text-sm bg-green-500/10 border border-green-500/20 rounded-xl px-4 py-3"
+                  initial={{
+                    opacity: 0,
+                    y: 10,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  className="
+                    flex
+                    items-center
+                    gap-2
+
+                    text-sm
+                    text-green-500
+
+                    bg-green-500/10
+
+                    border
+                    border-green-500/20
+
+                    rounded-2xl
+
+                    px-4
+                    py-3
+                  "
                 >
+
                   <CheckCircle size={16} />
-                  Message sent! I'll get back to you soon.
+
+                  Message sent successfully!
                 </motion.div>
               )}
 
+              {/* Error */}
+
               {status === 'error' && (
+
                 <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center gap-2 text-red-400 text-sm bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3"
+                  initial={{
+                    opacity: 0,
+                    y: 10,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  className="
+                    flex
+                    items-center
+                    gap-2
+
+                    text-sm
+                    text-red-500
+
+                    bg-red-500/10
+
+                    border
+                    border-red-500/20
+
+                    rounded-2xl
+
+                    px-4
+                    py-3
+                  "
                 >
+
                   <AlertCircle size={16} />
+
                   {errorMsg}
                 </motion.div>
               )}
 
+              {/* Submit */}
+
               <motion.button
                 type="submit"
                 disabled={status === 'loading'}
-                className="w-full btn-primary text-white flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
-                whileHover={status !== 'loading' ? { scale: 1.02 } : {}}
-                whileTap={status !== 'loading' ? { scale: 0.98 } : {}}
+                whileHover={
+                  status !== 'loading'
+                    ? { scale: 1.02 }
+                    : {}
+                }
+                whileTap={
+                  status !== 'loading'
+                    ? { scale: 0.98 }
+                    : {}
+                }
+                className="
+                  w-full
+                  btn-primary
+                  text-white
+
+                  flex
+                  items-center
+                  justify-center
+                  gap-2
+
+                  disabled:opacity-60
+                  disabled:cursor-not-allowed
+                "
               >
+
                 {status === 'loading' ? (
                   <>
-                    <Loader size={16} className="animate-spin" />
+                    <Loader
+                      size={16}
+                      className="animate-spin"
+                    />
+
                     Sending...
                   </>
                 ) : (
                   <>
                     <Send size={16} />
+
                     Send Message
                   </>
                 )}

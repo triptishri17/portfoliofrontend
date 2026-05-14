@@ -1,23 +1,34 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
 
 export const useTheme = () => {
-  const [isDark, setIsDark] = useState(() => {
-    const saved = localStorage.getItem('portfolio-theme');
-    return saved ? saved === 'dark' : true; // Default dark
-  });
+  const [theme, setTheme] = useState("dark");
 
   useEffect(() => {
-    const root = document.documentElement;
-    if (isDark) {
-      root.classList.add('dark');
-      localStorage.setItem('portfolio-theme', 'dark');
-    } else {
-      root.classList.remove('dark');
-      localStorage.setItem('portfolio-theme', 'light');
+    const savedTheme = localStorage.getItem("portfolio-theme");
+
+    if (savedTheme) {
+      setTheme(savedTheme);
     }
-  }, [isDark]);
+  }, []);
 
-  const toggleTheme = () => setIsDark((prev) => !prev);
+  useEffect(() => {
+    const root = window.document.documentElement;
 
-  return { isDark, toggleTheme };
+    root.classList.remove("light", "dark");
+
+    root.classList.add(theme);
+
+    localStorage.setItem("portfolio-theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) =>
+      prev === "dark" ? "light" : "dark"
+    );
+  };
+
+  return {
+    theme,
+    toggleTheme,
+  };
 };
