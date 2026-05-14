@@ -67,6 +67,35 @@ const projects = [
 
     featured: true,
   },
+
+   {
+    id: 3,
+
+    title: 'Personal Portfolio Website',
+
+    description:
+      'Modern animated developer portfolio with dark mode, responsive UI, smooth animations, project showcase, resume section, and contact functionality.',
+
+    image: 'portfolio.png',
+
+    tech: [
+      'React',
+      'Tailwind CSS',
+      'Framer Motion',
+      'Vite',
+      'Node.js',
+      'Nodemailer',
+    ],
+
+    github:
+      'https://github.com/triptishri17',
+
+    live:
+      'https://portfoliofrontend-chi-ruby.vercel.app/',
+
+    featured: true,
+  },
+
 ];
 
 /* ─────────────────────────────────────────────
