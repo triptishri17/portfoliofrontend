@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import { ArrowDown, Download, Github, Linkedin, Instagram, Twitter, Mail } from 'lucide-react';
 import { fadeInUp, fadeInRight, staggerContainer } from '../animations/variants';
+import API_URL from '../config/api';
 import { downloadResume } from '../hooks/useApi';
 
 const socials = [
@@ -17,7 +18,7 @@ const Hero = () => {
       await downloadResume();
     } catch {
       // Fallback: open resume URL directly
-      window.open('/api/resume/download', '_blank');
+      window.open(`${API_URL}/api/resume/download`, '_blank');
     }
   };
 

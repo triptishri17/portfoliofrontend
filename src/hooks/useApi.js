@@ -1,15 +1,14 @@
 import axios from 'axios';
-
-// Base URL — uses Vite proxy in dev, env var in production
-const BASE_URL = import.meta.env.VITE_API_URL || '/api';
+import API_URL from '../config/api';
 
 const api = axios.create({
-  baseURL: BASE_URL,
+  baseURL: `${API_URL}/api`,
   timeout: 15000,
   headers: {
     'Content-Type': 'application/json',
   },
 });
+
 
 // ─── Contact API ────────────────────────────────────────────────────
 export const sendContactMessage = async (formData) => {
